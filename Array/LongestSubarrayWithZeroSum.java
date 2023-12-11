@@ -41,12 +41,12 @@ public class LongestSubarrayWithZeroSum {
                     if (map.containsKey(sum)) {
                         maxSubArray = Math.max(maxSubArray, i - (map.get(sum)));
                     } else {
+                        // we need longer array so update the sum in map only if it's not present
                         map.put(sum, i);
                     }
                 }
             }
             return maxSubArray;
-
         }
     }
 }
