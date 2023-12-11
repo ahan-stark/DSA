@@ -2,7 +2,7 @@ import java.util.HashMap;
 
 public class LongestSubarrayWithZeroSum {
     public static void main(String[] args) {
-        int arr[] = {9, -3, 3, -1, 6, -5};
+        int arr[] = { 9, -3, 3, -1, 6, -5 };
         Solution solution = new Solution();
         // Brute Force SOlution
         int bruteSol = solution.bruteForce(arr);
