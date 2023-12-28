@@ -72,6 +72,7 @@ public class FindRepeatingAndMissingNumber {
             // x2-y2 can be (x-y)(x+y) => (x+y)= s2n / (x-y)
             int val2 = s2 - s2n;
             // val2 will hold value x+y
+            // find x + y = x2 - y2 / x - y
             val2 = val2 / val;
             // s2n => becomes x + y
             // now (x+y) + (x-y) = > x = (val2 + val1)/2 equating both
