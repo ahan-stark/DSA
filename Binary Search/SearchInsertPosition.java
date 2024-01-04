@@ -13,7 +13,7 @@ public class SearchInsertPosition {
             int low = 0, high = arr.length - 1;
             int ans = -1;
             while (low <= high) {
-                int mid = (low + high);
+                int mid = (low + high)/2;
                 if (ele <= arr[mid]) {
                     ans = mid;
                     high = mid - 1;
