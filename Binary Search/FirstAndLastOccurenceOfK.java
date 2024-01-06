@@ -30,6 +30,8 @@ public class FirstAndLastOccurenceOfK {
             ans[0] = first;
             ans[1] = last;
             return ans;
+            // if asked about the total occurence of the duplicate elem then do
+            // int count = (last - first) + 1;
         }
 
         private int[] betterApproach(int arr[], int elem) {
@@ -39,6 +41,8 @@ public class FirstAndLastOccurenceOfK {
             // hence the upper bound points to the next element add - 1;
             int upperB = upperBound(arr, elem);
             return new int[] { lowB, upperB - 1 };
+            // if asked about the total occurence of the duplicate elem then do
+            // int count = (upperB - lowB) + 1;
         }
 
         private int[] optimalApproach(int arr[], int elem) {
@@ -72,6 +76,8 @@ public class FirstAndLastOccurenceOfK {
                 }
             }
             return new int[] { lowIndex, highIndex };
+            // if asked about the total occurence of the duplicate elem then do
+            // int count = (highIndex - lowIndex) + 1;
         }
     }
 
