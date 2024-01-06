@@ -24,7 +24,6 @@ public class FirstAndLastOccurenceOfK {
                     if (first == -1)
                         first = i;
                     last = i;
-
                 }
             }
             ans[0] = first;
