@@ -28,6 +28,8 @@ public class SearchElementinRotatedSortedArray {
                 if (arr[mid] == target)
                     return true;
                 // check if arr[low],arr[mid],arr[high] are same
+                // then by program logic it will consider the left half is sorted
+                // it might go wrong if we have answer in right half
                 // if same then increment the pointer
                 if (arr[low] == arr[mid] && arr[low] == arr[high]) {
                     low = low + 1;
