@@ -10,7 +10,6 @@ public class PainterPartition {
         System.out.println("Brute Force : " + bruteForce);
         int binarySearch = solution.binarySearch(arr, k);
         System.out.println("Binary Search : " + binarySearch);
-
     }
 
     private static class Solution {
@@ -22,8 +21,8 @@ public class PainterPartition {
                 sum = sum + ele;
             }
             for (int i = max; i <= sum; i++) {
-                // i represents time
-                if (checkPaintersTotalTime(arr, i) <= k) {
+                // i represents time allocated to each painters
+                if (checkTotalPainters(arr, i) <= k) {
                     return i;
                 }
             }
@@ -40,8 +39,9 @@ public class PainterPartition {
             int low = max, high = sum;
             while (low <= high) {
                 int mid = (low + high) / 2;
-                //check with the time of mid if its less than given k trim down high else trim low 
-                if (checkPaintersTotalTime(arr, mid) <= k)
+                // check with the time of mid if its less than given k trim down high else trim
+                // low
+                if (checkTotalPainters(arr, mid) <= k)
                     high = mid - 1;
                 else
                     low = mid + 1;
@@ -49,7 +49,7 @@ public class PainterPartition {
             return low;
         }
 
-        private int checkPaintersTotalTime(int[] arr, int time) {
+        private int checkTotalPainters(int[] arr, int time) {
             int totalPainter = 1;
             int sum = 0;
             for (int ele : arr) {
