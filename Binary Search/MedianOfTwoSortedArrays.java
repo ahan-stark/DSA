@@ -47,7 +47,7 @@ public class MedianOfTwoSortedArrays {
             if (n1 > n2)
                 return binarySearch(nums2, nums1);
             // we will consider small array for our operations
-            // we do indexing like we consider 0 items from arr1(smallArr),1 items ,2
+            // we do indexing like we consider 0 items from nums1(smallArr),1 items ,2
             // items, 3items....
             int low = 0;
             int high = n1;
@@ -62,10 +62,10 @@ public class MedianOfTwoSortedArrays {
                 // calculate the left out to fill in left
                 int mid2 = left - mid1;
                 // calculate l1, l2 r1,r2
-                // l1 = last elem of arr1 in left half
-                // l2 = last elem of arr2 in left half
-                // r1 = first elem of rest of arr1
-                // r2 = first elem of rest of arr2
+                // l1 = last elem of nums1 in left half
+                // l2 = last elem of nums2 in left half
+                // r1 = first elem of rest of nums1
+                // r2 = first elem of rest of nums2
                 int l1 = (mid1) > 0 ? nums1[mid1 - 1] : Integer.MIN_VALUE;
                 int l2 = (mid2) > 0 ? nums2[mid2 - 1] : Integer.MIN_VALUE;
                 int r1 = (mid1 < n1) ? nums1[mid1] : Integer.MAX_VALUE;
