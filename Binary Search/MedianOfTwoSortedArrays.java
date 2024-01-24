@@ -83,7 +83,8 @@ public class MedianOfTwoSortedArrays {
                         return (double) ((Math.max(l1, l2) + Math.min(r1, r2))) / 2;
                     }
                 }
-                // if the l1 is larger than r2 that means that l1 should be on right side so we trim the high
+                // if the l1 is larger than r2 that means that l1 should be on right side so we
+                // trim the high
                 else if (l1 > r2)
                     high = mid1 - 1;
                 else
