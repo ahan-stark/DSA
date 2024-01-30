@@ -31,8 +31,10 @@ public class RowWithMaximumNumberOf1 {
             int ans = 0;
             for (int i = 0; i < arr.length; i++) {
                 int sol = checkRows(arr[i]);
-                if ((arr.length - sol) > ans) {
-                    ans = (arr.length - sol);
+                // the binary search will return first occurence of 1
+                // we can calculate total 1's using arr[0].length - val
+                if ((arr[0].length - sol) > ans) {
+                    ans = (arr[0].length - sol);
                     index = i;
                 }
             }
