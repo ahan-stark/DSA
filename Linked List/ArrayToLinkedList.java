@@ -6,7 +6,7 @@ public class ArrayToLinkedList {
         for (int i = 1; i < arr.length; i++) {
             Node temp = new Node(arr[i]);
             cur.next = temp;
-            cur = temp;
+            cur = cur.next;
         }
         while (node != null) {
             System.out.println(node.data);
