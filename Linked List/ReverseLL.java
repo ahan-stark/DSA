@@ -38,7 +38,7 @@ public class ReverseLL {
         }
         cur = head;
         System.out.println("Recursion Method :");
-        Node recusrNode = recusrion(head);
+        Node recusrNode = recursion(head);
         while (recusrNode != null) {
             System.out.println(recusrNode.data);
             recusrNode = recusrNode.next;
@@ -72,10 +72,10 @@ public class ReverseLL {
         return prev;
     }
 
-    private static Node recusrion(Node head) {
+    private static Node recursion(Node head) {
         if (head == null || head.next == null)
             return head;
-        Node newNode = recusrion(head.next);
+        Node newNode = recursion(head.next);
         Node frontNode = head.next;
         frontNode.next = head;
         head.next = null;
