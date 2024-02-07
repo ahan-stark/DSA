@@ -6,7 +6,7 @@ public class LengthOfLL {
         for (int i = 1; i < arr.length; i++) {
             Node temp = new Node(arr[i]);
             cur.next = temp;
-            cur = temp;
+            cur = cur.next;
         }
         int length = lengthOfLL(node);
         System.out.println("length of linked list : " + length);
