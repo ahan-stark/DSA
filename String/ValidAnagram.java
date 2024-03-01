@@ -1,5 +1,3 @@
-import java.util.HashMap;
-
 public class ValidAnagram {
     public static void main(String[] args) {
         String str1 = "aacc", str2 = "ccaa";
@@ -8,6 +6,7 @@ public class ValidAnagram {
         System.out.println("Are the strings Anagram? : " + betterApproach);
 
     }
+
     private static class Solution {
         private boolean betterApproach(String str1, String str2) {
             int arr[] = new int[26];
