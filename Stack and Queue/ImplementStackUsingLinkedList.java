@@ -5,7 +5,7 @@ public class ImplementStackUsingLinkedList {
         StackUsingLL stack = new StackUsingLL();
         Scanner sc = new Scanner(System.in);
         while (true) {
-            System.out.println("Implementing stack using queue");
+            System.out.println("Implementing stack using LinkedList");
             System.out.println("1 - Push");
             System.out.println("2 - Pop");
             System.out.println("3 - Print Stack");
