@@ -44,3 +44,7 @@ public class NextGreaterElementsUsing2arr {
         }
     }
 }
+// find the next greater elem of nums2 and for each of nums2 val, put nums2 val
+// and its next greater elem in HashMap, then iterate through nums1 and for each
+// val of nums1, get the map.get() of nums1 val , it wil get the value from
+// hashmap the corresponding next greater element
