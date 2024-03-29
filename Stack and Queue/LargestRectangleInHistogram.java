@@ -8,6 +8,8 @@ public class LargestRectangleInHistogram {
         System.out.println("Brute Force : " + bruteForceAns);
         int optimalAns = solution.getOptimalSol(arr);
         System.out.println("Optimal Solution : " + optimalAns);
+        int efficeintApproach = solution.getEfficientSol(arr);
+        System.out.println("Efficient Solution : " + efficeintApproach);
     }
 
     private static class Solution {
@@ -78,5 +80,30 @@ public class LargestRectangleInHistogram {
         // left, it means there is no smaller element for the current element, so we put
         // 0. Similarly, for the right boundary, if no smaller element is found to the
         // right, we put arr.length - 1.
+
+        private int getEfficientSol(int arr[]) {
+            int ans = -1;
+            Stack<Integer> stack = new Stack<>();
+            for (int i = 0; i <= arr.length; i++) {
+                while (!stack.isEmpty() && (i == arr.length || arr[i] <= arr[stack.peek()])) {
+                    int height = arr[stack.pop()];
+                    int width;
+                    if (stack.isEmpty())
+                        width = i;
+                    else
+                        width = i - stack.peek() - 1;
+                    int rectangle = (width * height);
+                    ans = Math.max(ans, rectangle);
+                }
+                stack.push(i);
+            }
+            return ans;
+        }
     }
+    // just check if the new element is less than than stack.peek(), if the new is
+    // less so that is the right boundary, so take stack.peek() as length and pop it
+    // and take stack.top() as left boundary, then find left - right - 1 to find
+    // total width and multiply with length, if in case stack become empty while
+    // checking right or left , consider that i is the width, so for the last
+    // element we have to check till n + 1 for the edge case if right is not present
 }
