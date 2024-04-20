@@ -50,3 +50,9 @@ public class LongestSubstringWithAtMostKDistinctCharacters {
         }
     }
 }
+// intution is that keep adding values to hashMap and keep checking the size,
+// once we find that map size is equal to k that means it has perfect k distinct
+// elements in subArr, then get the len of that window as right - left + 1, if
+// the size of map becomes greater than k that means we have to trim down the
+// window so keep removing the elem from left and also from map,if the count of
+// that map.key() becomes zero then directly remove that from map.
