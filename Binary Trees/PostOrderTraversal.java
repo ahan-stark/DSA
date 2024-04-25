@@ -18,16 +18,16 @@ public class PostOrderTraversal {
             printPostOrder(root.right);
         }
     }
-}
 
-class Node {
-    int data;
-    Node left;
-    Node right;
+    static class Node {
+        int data;
+        Node left;
+        Node right;
 
-    Node(int data) {
-        this.data = data;
-        this.left = null;
-        this.right = null;
+        Node(int data) {
+            this.data = data;
+            this.left = null;
+            this.right = null;
+        }
     }
 }
