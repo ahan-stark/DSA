@@ -16,13 +16,11 @@ public class IterativeInOrder {
     private static class InOrder {
         private void printInOrder(Node root) {
             Stack<Node> stack = new Stack<>();
-            while (true) {
+            while (!stack.isEmpty() || root != null) {
                 if (root != null) {
                     stack.push(root);
                     root = root.left;
                 } else {
-                    if (stack.isEmpty())
-                        break;
                     root = stack.pop();
                     System.out.println(root.data);
                     root = root.right;
