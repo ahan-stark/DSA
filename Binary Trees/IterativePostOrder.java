@@ -11,6 +11,7 @@ public class IterativePostOrder {
         root.right.right = new Node(7);
         PostOrder postOrder = new PostOrder();
         postOrder.printPostOrder(root);
+        postOrder.printPostOrder1Stack(root);
     }
 
     private static class PostOrder {
@@ -29,6 +30,30 @@ public class IterativePostOrder {
             System.out.println("Post order : ");
             while (!stack2.isEmpty()) {
                 System.out.println(stack2.pop().data);
+            }
+        }
+
+        private void printPostOrder1Stack(Node root) {
+            Node cur = root;
+            System.out.println("Post Order using 1 stack :");
+            Stack<Node> stack = new Stack<>();
+            while (!stack.isEmpty() || cur != null) {
+                if (cur != null) {
+                    stack.push(cur);
+                    cur = cur.left;
+                } else {
+                    Node temp = stack.peek().right;
+                    if (temp == null) {
+                        temp = stack.pop();
+                        System.out.println(temp.data);
+                        while (!stack.isEmpty() && temp == stack.peek().right) {
+                            System.out.println(stack.peek().data);
+                            temp = stack.pop();
+                        }
+                    } else {
+                        cur = temp;
+                    }
+                }
             }
         }
     }
