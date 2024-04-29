@@ -59,3 +59,5 @@ public class DepthOfBinaryTree {
         }
     }
 }
+// this is same as finding the depth of binary tree, for each root we find the
+// left depth and right depth and return 1 + Math.max(left, right)
