@@ -61,3 +61,4 @@ public class ConstructBTfromInorderPreorder {
 // that it is out of index hence return null..the inOrder is maintained in
 // hashMap with index as values so we can get that index when we have that
 // particular node
+// Solve this while seeing and checking the values in arrays
