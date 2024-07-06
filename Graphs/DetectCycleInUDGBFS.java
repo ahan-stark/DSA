@@ -1,7 +1,7 @@
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class DetectCycleInUDG {
+public class DetectCycleInUDGBFS {
     public static void main(String[] args) {
         int adjList[][] = { { 1 }, { 0, 2, 4 }, { 1, 3 }, { 2, 4 }, { 1, 3 } };
         Solution solution = new Solution();
