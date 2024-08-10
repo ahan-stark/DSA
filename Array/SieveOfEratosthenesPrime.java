@@ -9,7 +9,7 @@ public class SieveOfEratosthenesPrime {
         for (int i = start; i <= end; i++) {
             map.put(i, true);
         }
-        for (int i = 2; i <= (end / 2) + 1; i = i + 2) {
+        for (int i = 2; i <= end; i = i + 2) {
             if (map.containsKey(i)) {
                 map.put(i, false);
             }
