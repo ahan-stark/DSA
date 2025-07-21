@@ -1,0 +1,53 @@
+// A robber is targeting to rob houses from a street. Each house has security measures that alert the police 
+// when two adjacent houses are robbed. The houses are arranged in a circular manner, 
+// thus the first and last houses are adjacent to each other.
+
+// Given an integer array money, where money[i] represents the amount of money that can be looted from the (i+1)th house. 
+// Return the maximum amount of money that the robber can loot without alerting the police.
+// Input: money = [1, 5, 2, 1, 6]
+
+// Output: 11
+
+// Explanation: [1, 5, 2, 1, 6] The underlined houses would give the maximum loot.
+
+import java.util.Arrays;
+
+public class HouseRobberCircular {
+    public static void main(String[] args) {
+        int[] money = { 1, 5, 2, 1, 6 };
+        System.out.println("max house that can he can rob is : " + modify(money));
+    }
+
+    private static int modify(int[] money) {
+        if (money.length == 1)
+            return money[0];
+        int dp1[] = new int[money.length - 1];
+        int dp2[] = new int[money.length - 1];
+        int arr1[] = new int[money.length - 1];
+        int arr2[] = new int[money.length - 1];
+        for (int i = 0; i < money.length - 1; i++) {
+            arr1[i] = money[i];
+        }
+        for (int i = 0; i < money.length - 1; i++) {
+            arr2[i] = money[i + 1];
+        }
+        Arrays.fill(dp1, -1);
+        Arrays.fill(dp2, -1);
+        int val1 = recursion(arr1.length - 1, arr1, dp1);
+        int val2 = recursion(arr2.length - 1, arr2, dp2);
+        return Math.max(val1, val2);
+    }
+
+    private static int recursion(int n, int[] money, int[] dp) {
+        if (n == 0)
+            return money[0];
+        if (n < 0)
+            return 0;
+        if (dp[n] != -1)
+            return dp[n];
+        int pick = money[n] + recursion(n - 2, money, dp);
+        int nonPick = 0 + recursion(n - 1, money, dp);
+        dp[n] = Math.max(pick, nonPick);
+        return dp[n];
+    }
+}
