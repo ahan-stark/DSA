@@ -51,3 +51,11 @@ public class HouseRobberCircular {
         return dp[n];
     }
 }
+//use same pick and non pick algo
+//since first and last is connected 
+//we choose first then remove the last elem and do a dp
+//we choose last, then remove the first elem and do a dp
+//we do this because if we choose last and then keep going 
+//we might end up choosing first also, so do seperatley for both
+//so del one that is add all to new arr except for last and same
+//for first also create 2 arr find both max values return that
