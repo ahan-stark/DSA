@@ -44,3 +44,5 @@ public class Triangle {
         return dp[row][col];
     }
 }
+
+// start from first row find all paths and return the min
