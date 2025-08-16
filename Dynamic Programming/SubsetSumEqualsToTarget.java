@@ -28,3 +28,10 @@ public class SubsetSumEqualsToTarget {
         return dp[curIndex][target] == 1 ? true : false;
     }
 }
+// everytime you pick a val, -subtract from target and move down untill you
+// reach target == 0, base case
+// dp is for index and target values
+// Since we need in boolean, keep values as -1 0 1
+// 1 -> true
+// 0 -> false
+// set it and then if 1 -> return true or else false
