@@ -26,6 +26,8 @@ public class FrogJump {
         Arrays.fill(dp, -1);
         System.out.println("Minimum amount of energy from 1  to " + heights.length + " is  : "
                 + recursion(heights.length - 1, heights, dp));
+        System.out.println("Minimum amount of energy from 1  to " + heights.length + " is  : "
+                + tabulation(heights.length, heights));
     }
 
     private static int recursion(int n, int[] heights, int[] dp) {
@@ -41,5 +43,18 @@ public class FrogJump {
         dp[n] = Math.min(left, right);
         return dp[n];
 
+    }
+
+    private static int tabulation(int n, int[] heights) {
+        int dp[] = new int[n];
+        for (int i = 1; i < n; i++) {
+            int singleJump = Math.abs(heights[i] - heights[i - 1]) + dp[i - 1];
+            int doubleJump = Integer.MAX_VALUE;
+            if (i - 2 >= 0) {
+                doubleJump = Math.abs(heights[i] - heights[i - 2]) + dp[i - 2];
+            }
+            dp[i] = Math.min(singleJump, doubleJump);
+        }
+        return dp[dp.length - 1];
     }
 }
