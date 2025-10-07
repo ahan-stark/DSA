@@ -16,6 +16,7 @@ public class MaximumSumOfNonAdjacentElements {
         dp = new int[nums.length];
         Arrays.fill(dp, -1);
         System.out.println("Maxiumum sum of non adjacent elements : " + recursion(nums.length - 1, nums));
+        System.out.println("Maxiumum sum of non adjacent elements : " + tabulation(nums.length, nums));
     }
 
     private static int recursion(int num, int[] nums) {
@@ -29,5 +30,15 @@ public class MaximumSumOfNonAdjacentElements {
         int noPick = 0 + recursion(num - 1, nums);
         dp[num] = Math.max(pick, noPick);
         return dp[num];
+    }
+    private static int tabulation(int n, int nums[]){
+        int dp[] = new int[n];
+        dp[0] = nums[0];
+        for(int i = 1; i < n; i++){
+            int pick = nums[i] + (i - 2 >= 0 ? dp[i - 2] : 0);
+            int noPick = 0 + dp[i - 1];
+            dp[i] = Math.max(pick, noPick);
+        }
+        return dp[dp.length - 1];
     }
 }
