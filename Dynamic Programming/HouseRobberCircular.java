@@ -16,6 +16,7 @@ public class HouseRobberCircular {
     public static void main(String[] args) {
         int[] money = { 1, 5, 2, 1, 6 };
         System.out.println("max house that can he can rob is : " + modify(money));
+        System.out.println("max house that can he can rob is : " + tabModify(money));
     }
 
     private static int modify(int[] money) {
@@ -50,12 +51,42 @@ public class HouseRobberCircular {
         dp[n] = Math.max(pick, nonPick);
         return dp[n];
     }
+
+    private static int tabModify(int[] money) {
+        if (money.length == 1)
+            return money[0];
+        int arr1[] = new int[money.length - 1];
+        int arr2[] = new int[money.length - 1];
+        for (int i = 0; i < money.length - 1; i++) {
+            arr1[i] = money[i];
+        }
+        for (int i = 0; i < money.length - 1; i++) {
+            arr2[i] = money[i + 1];
+        }
+        int val1 = tabulation(arr1);
+        int val2 = tabulation(arr2);
+        return Math.max(val1, val2);
+    }
+
+    private static int tabulation(int money[]) {
+        int[] dp = new int[money.length];
+        dp[0] = money[0];
+        for (int i = 1; i < money.length; i++) {
+            int pick = money[i];
+            int nonPick = 0 + dp[i - 1];
+            if (i - 2 >= 0) {
+                pick = pick + dp[i - 2];
+            }
+            dp[i] = Math.max(pick, nonPick);
+        }
+        return dp[dp.length - 1];
+    }
 }
-//use same pick and non pick algo
-//since first and last is connected 
-//we choose first then remove the last elem and do a dp
-//we choose last, then remove the first elem and do a dp
-//we do this because if we choose last and then keep going 
-//we might end up choosing first also, so do seperatley for both
-//so del one that is add all to new arr except for last and same
-//for first also create 2 arr find both max values return that
+// use same pick and non pick algo
+// since first and last is connected
+// we choose first then remove the last elem and do a dp
+// we choose last, then remove the first elem and do a dp
+// we do this because if we choose last and then keep going
+// we might end up choosing first also, so do seperatley for both
+// so del one that is add all to new arr except for last and same
+// for first also create 2 arr find both max values return that
