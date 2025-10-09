@@ -39,6 +39,8 @@ public class NinjasTraining {
         }
         System.out.println("Ninja's training with maximum merit point is  : "
                 + recursion(matrix.length - 1, matrix[0].length, matrix));
+        System.out.println("Ninja's training with maximum merit point is  : "
+                + tabulation(matrix));
 
     }
 
@@ -63,6 +65,37 @@ public class NinjasTraining {
         }
         dp[curRow][lastColIndex] = max;
         return dp[curRow][lastColIndex];
+    }
+
+    private static int tabulation(int[][] matrix) {
+        int max = Integer.MIN_VALUE;
+        if (matrix.length == 1) {
+            for (int ele : matrix[0]) {
+                max = Math.max(max, ele);
+            }
+            return max;
+        }
+        int dp[][] = new int[matrix.length][matrix[0].length];
+        for (int j = 0; j < 3; j++) {
+            dp[0][j] = matrix[0][j];
+        }
+
+        for (int i = 1; i < matrix.length; i++) {
+            for (int j = 0; j < 3; j++) {
+                int curMax = Integer.MIN_VALUE;
+                for (int k = 0; k < 3; k++) {
+                    if (j != k) {
+                        curMax = Math.max(curMax, matrix[i][j] + dp[i - 1][k]);
+                    }
+                }
+                dp[i][j] = curMax;
+            }
+        }
+        max = Integer.MIN_VALUE;
+        for (int ele : dp[dp.length - 1]) {
+            max = Math.max(max, ele);
+        }
+        return max;
     }
 }
 // the logic is go with top down approach
