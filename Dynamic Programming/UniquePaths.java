@@ -31,6 +31,7 @@ public class UniquePaths {
             Arrays.fill(arr, -1);
         }
         System.out.println("total unique paths : " + recursion(m - 1, n - 1));
+        System.out.println("total unique paths : " + tabulation(m, n));
 
     }
 
@@ -45,5 +46,22 @@ public class UniquePaths {
         int up = recursion(i - 1, j);
         dp[i][j] = left + up;
         return dp[i][j];
+    }
+
+    private static int tabulation(int row, int col) {
+        if (row < 0 || col < 0)
+            return 0;
+        int[][] dp = new int[row][col];
+        dp[0][0] = 1;
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (i == 0 && j == 0)
+                    continue;
+                int up = i - 1 >= 0 ? dp[i - 1][j] : 0;
+                int left = j - 1 >= 0 ? dp[i][j - 1] : 0;
+                dp[i][j] = up + left;
+            }
+        }
+        return dp[dp.length - 1][dp[0].length - 1];
     }
 }
