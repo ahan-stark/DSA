@@ -27,6 +27,7 @@ public class UniquePaths2 {
         }
         System.out.println("The total ways to reach ending point in unique way is : "
                 + recursion(matrix.length - 1, matrix[0].length - 1, matrix));
+        System.out.println("The total ways to reach ending point in unique way is : " + tabulation(matrix));
 
     }
 
@@ -43,6 +44,33 @@ public class UniquePaths2 {
         int up = recursion(i - 1, j, mat);
         dp[i][j] = left + up;
         return dp[i][j];
+    }
+
+    private static int tabulation(int mat[][]) {
+        int dp[][] = new int[mat.length][mat[0].length];
+        if (mat[0][0] == 1)
+            return 0;
+        dp[0][0] = 1;
+        for (int row = 0; row < mat.length; row++) {
+            for (int col = 0; col < mat[0].length; col++) {
+                if (row == 0 && col == 0)
+                    continue;
+                if (mat[row][col] == 1) {
+                    dp[row][col] = 0;
+                    continue;
+                }
+                int up = 0;
+                int left = 0;
+                if (col - 1 >= 0) {
+                    left = dp[row][col - 1];
+                }
+                if (row - 1 >= 0) {
+                    up = dp[row - 1][col];
+                }
+                dp[row][col] = left + up;
+            }
+        }
+        return dp[dp.length - 1][dp[0].length - 1];
     }
 }
 // similar to unique paths 1, since there will be blocking add a extra check
