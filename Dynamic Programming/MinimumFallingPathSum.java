@@ -24,6 +24,8 @@ public class MinimumFallingPathSum {
             min = Math.min(min, recursion(0, col, matrix));
         }
         System.out.println("Minimum path from the top row to any of the bootom row  in 3 direction is : " + min);
+        System.out.println(
+                "Minimum path from the top row to any of the bootom row  in 3 direction is : " + tabulation(matrix));
     }
 
     private static int recursion(int row, int col, int[][] matrix) {
@@ -46,6 +48,27 @@ public class MinimumFallingPathSum {
             min = Math.min(min, matrix[row][col] + right);
         dp[row][col] = min;
         return dp[row][col];
+    }
+
+    private static int tabulation(int[][] matrix) {
+        int dp[][] = new int[matrix.length][matrix[0].length];
+        for (int i = 0; i < dp[0].length; i++) {
+            dp[0][i] = matrix[0][i];
+        }
+        for (int row = 1; row < matrix.length; row++) {
+            for (int col = 0; col < matrix[0].length; col++) {
+                int up = dp[row - 1][col];
+                int left = col - 1 >= 0 ? dp[row - 1][col - 1] : Integer.MAX_VALUE;
+                int right = col + 1 <= matrix[0].length - 1 ? dp[row - 1][col + 1] : Integer.MAX_VALUE;
+                int ans = Math.min(up, Math.min(left, right));
+                dp[row][col] = matrix[row][col] + ans;
+            }
+        }
+        int min = Integer.MAX_VALUE;
+        for (int i = 0; i < dp[0].length; i++) {
+            min = Math.min(min, dp[dp.length - 1][i]);
+        }
+        return min;
     }
 }
 // do recursion from each of the last row and return when you reach the top row,
