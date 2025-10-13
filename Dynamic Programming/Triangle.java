@@ -24,6 +24,7 @@ public class Triangle {
             Arrays.fill(arr, -1);
         }
         System.out.println("Minimum path from 0th row to last row is : " + recursion(0, 0, triangle));
+        System.out.println("Minimum path from 0th row to last row is : " + tabulation(triangle));
     }
 
     private static int recursion(int row, int col, int[][] triangle) {
@@ -42,6 +43,21 @@ public class Triangle {
             bottomRight = triangle[row][col] + bottomRight;
         dp[row][col] = Math.min(bottomStraight, bottomRight);
         return dp[row][col];
+    }
+
+    private static int tabulation(int[][] triangle) {
+        int dp[][] = new int[triangle.length][triangle[triangle.length - 1].length];
+        for (int i = 0; i < triangle[triangle.length - 1].length; i++) {
+            dp[triangle.length - 1][i] = triangle[triangle.length - 1][i];
+        }
+        for (int row = triangle.length - 2; row >= 0; row--) {
+            for (int col = 0; col < triangle[row].length; col++) {
+                dp[row][col] = Math.min(triangle[row][col] + dp[row + 1][col],
+                        triangle[row][col] + dp[row + 1][col + 1]);
+            }
+        }
+
+        return dp[0][0];
     }
 }
 
