@@ -20,6 +20,7 @@ public class BuySellStock2 {
         for (int[] temp : dp)
             Arrays.fill(temp, -1);
         System.out.println("Max profit achiveable is :  " + recursion(0, 1, arr));
+        System.out.println("Max profit achiveable is :  " + tabulation(arr));
     }
 
     private static int recursion(int index, int buy, int[] prices) {
@@ -42,10 +43,35 @@ public class BuySellStock2 {
         dp[index][buy] = Math.max(0, profit);
         return dp[index][buy];
     }
+
+    private static int tabulation(int arr[]) {
+        // 1 -> buy case, 2 -> sell case
+        int dp[][] = new int[arr.length + 1][2];
+        dp[dp.length - 1][0] = 0;
+        dp[dp.length - 1][1] = 0;
+        int profit = 0;
+        for (int i = arr.length - 1; i >= 0; i--) {
+            for (int buy = 0; buy < 2; buy++) {
+                if (buy == 0) {
+                    // sell case
+                    int sell = arr[i] + dp[i +  1][1];
+                    int skipSell = 0 + dp[i + 1][0];
+                    profit = Math.max(sell, skipSell);
+                } else {
+                    // buy case
+                    int buyNow = -arr[i] + dp[i + 1][0];
+                    int skipBuy = 0 + dp[i + 1][1];
+                    profit = Math.max(buyNow, skipBuy);
+                }
+                dp[i][buy] = profit;
+            }
+        }
+        return dp[0][1];
+    }
 }
-//keep buy 1 and sell 0
-//maintain dp with index and buy or sell states
-//initailly keep 1 becuase we need to buy first
+// keep buy 1 and sell 0
+// maintain dp with index and buy or sell states
+// initailly keep 1 becuase we need to buy first
 // keep scenario for buying and selling
 // for each buy or sell
 // keep the values like if i sell now or sell next
