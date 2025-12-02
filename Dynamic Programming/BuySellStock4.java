@@ -24,6 +24,8 @@ public class BuySellStock4 {
             }
         }
         System.out.println("Max profit we can get by max k transaction is " + recursion(prices, 0, 1, 0, k));
+        System.out.println("Max profit we can get by max k transaction is " + tabulation(prices, k));
+
     }
 
     private static int recursion(int[] arr, int index, int buy, int transaction, int k) {
@@ -48,10 +50,30 @@ public class BuySellStock4 {
         dp[index][buy][transaction] = profit;
         return dp[index][buy][transaction];
     }
+
+    private static int tabulation(int[] arr, int k) {
+        int[][][] dp = new int[arr.length + 1][k + 1][2];
+        for (int i = arr.length - 1; i >= 0; i--) {
+            for (int transaction = 0; transaction < k; transaction++) {
+                for (int buy = 0; buy <= 1; buy++) {
+                    if (buy == 1) { // buy case
+                        int buyNow = -arr[i] + dp[i + 1][transaction][0];
+                        int skipBuy = 0 + dp[i + 1][transaction][1];
+                        dp[i][transaction][buy] = Math.max(buyNow, skipBuy);
+                    } else { // sell case
+                        int sellNow = arr[i] + dp[i + 1][transaction + 1][1];
+                        int skipSell = 0 + dp[i + 1][transaction][0];
+                        dp[i][transaction][buy] = Math.max(sellNow, skipSell);
+                    }
+                }
+            }
+        }
+        return dp[0][0][1];
+    }
 }
-//keep buy 1 and sell 0
-//maintain dp with index and buy or sell states
-//initailly keep 1 becuase we need to buy first
+// keep buy 1 and sell 0
+// maintain dp with index and buy or sell states
+// initailly keep 1 becuase we need to buy first
 // keep scenario for buying and selling
 // for each buy or sell
 // keep the values like if i sell now or sell next
@@ -61,5 +83,6 @@ public class BuySellStock4 {
 // that add sellValue
 // buy -> 3 , sell -> 8
 // -3 + 8 = 5
-//keep transaction count if its k you cannot perform more than this 
-//3d dp to store index, then buy or sell inside that 0th transaction or 1st transaction
+// keep transaction count if its k you cannot perform more than this
+// 3d dp to store index, then buy or sell inside that 0th transaction or 1st
+// transaction
