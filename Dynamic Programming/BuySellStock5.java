@@ -17,29 +17,33 @@ import java.util.Arrays;
 
 // Profit calculation: ((9 - 4) - 2) + ((8 - 1) - 2)= 8.
 
-
-
 public class BuySellStock5 {
-    static int[][] dp;
+  static int[][] dp;
 
-    public static void main(String[] args) {
-        int[] prices = { 1, 3, 2, 8, 4, 9 };
-        int fee = 2;
-        dp = new int[prices.length + 1][2];
-        for (int[] temp : dp) {
-            Arrays.fill(temp, -1);
-        }
-        System.out.println("Max profit we can get by paying transaction fee is " + recursion(0, 1, prices, fee));
+  public static void main(String[] args) {
+    int[] prices = { 1, 3, 2, 8, 4, 9 };
+    int fee = 2;
+    dp = new int[prices.length + 1][2];
+    for (int[] temp : dp) {
+      Arrays.fill(temp, -1);
     }
-    private static int recursion(int index, int canBuy, int[] arr, int fee) {
-    if (index == arr.length) return 0;
-    if (dp[index][canBuy] != -1) return dp[index][canBuy];
+    System.out.println("Max profit we can get by paying transaction fee is " + recursion(0, 1, prices, fee));
+    System.out.println("Max profit we can get by paying transaction fee is " + tabulation(prices, fee));
+
+  }
+
+  private static int recursion(int index, int canBuy, int[] arr, int fee) {
+    if (index == arr.length)
+      return 0;
+    if (dp[index][canBuy] != -1)
+      return dp[index][canBuy];
     int profit = 0;
     if (canBuy == 1) {
       // buy case
-            int buyNow = -arr[index] + recursion(index + 1, 0, arr, fee);;
-            int skipBuy = recursion(index + 1, 1, arr, fee);
-            profit = Math.max(buyNow, skipBuy);
+      int buyNow = -arr[index] + recursion(index + 1, 0, arr, fee);
+      ;
+      int skipBuy = recursion(index + 1, 1, arr, fee);
+      profit = Math.max(buyNow, skipBuy);
     } else {
       // sale case
       int sellNow = arr[index] - fee + recursion(index + 1, 1, arr, fee);
@@ -49,10 +53,28 @@ public class BuySellStock5 {
     dp[index][canBuy] = profit;
     return dp[index][canBuy];
   }
+
+  private static int tabulation(int arr[], int fee) {
+    int[][] dp = new int[arr.length + 1][2];
+    for (int i = arr.length - 1; i >= 0; i--) {
+      for (int buy = 0; buy <= 1; buy++) {
+        if (buy == 1) { // buy case
+          int buyNow = (-arr[i] + dp[i + 1][0] - fee);
+          int skipBuy = dp[i + 1][1];
+          dp[i][buy] = Math.max(buyNow, skipBuy);
+        } else {// sell case
+          int sellNow = arr[i] + dp[i + 1][1];
+          int skipSell = dp[i + 1][0];
+          dp[i][buy] = Math.max(sellNow, skipSell);
+        }
+      }
+    }
+    return dp[0][1];
+  }
 }
-//keep buy 1 and sell 0
-//maintain dp with index and buy or sell states
-//initailly keep 1 becuase we need to buy first
+// keep buy 1 and sell 0
+// maintain dp with index and buy or sell states
+// initailly keep 1 becuase we need to buy first
 // keep scenario for buying and selling
 // for each buy or sell
 // keep the values like if i sell now or sell next
@@ -62,4 +84,4 @@ public class BuySellStock5 {
 // that add sellValue
 // buy -> 3 , sell -> 8
 // -3 + 8 = 5
-//when selling minus the transaction fees
+// when selling minus the transaction fees
