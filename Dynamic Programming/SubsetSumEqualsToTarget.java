@@ -59,7 +59,7 @@ public class SubsetSumEqualsToTarget {
 // 0 -> false
 // set it and then if 1 -> return true or else false
 
-// in tabulation fill the dp with index * target, then check if i pick this
+// in tabulation fill the dp with [index][target], then check if i pick this
 // element when I have this target, what will be the prev one if subtract with
 // the current ele
 // base condition keep all the target as 0, meaning when we reach 0, we have the
