@@ -20,6 +20,8 @@ public class CountPartitionsWithGivenDifference {
         int arr[] = { 1, 1, 2, 3 };
         int diff = 1;
         System.out.println("Total subsets  : " + findSubsets(arr, diff));
+        System.out.println("Total subsets  : " + tabulation(arr.length, arr, diff));
+
     }
 
     private static int findSubsets(int[] arr, int diff) {
@@ -53,6 +55,41 @@ public class CountPartitionsWithGivenDifference {
         dp[index][target] = (pick + noPick) % ((int) 1e9 + 7);
         return dp[index][target];
     }
+
+    private static int tabulation(int n, int[] arr, int diff) {
+
+        int totalSum = 0;
+        for (int ele : arr) {
+            totalSum = totalSum + ele;
+        }
+        int s2 = totalSum - diff;
+        if (s2 < 0)
+            return 0;
+        if (s2 % 2 != 0)
+            return 0;
+        int target = s2 / 2;
+        int dp[][] = new int[n + 1][target + 1];
+        int mod = 1000000007;
+        for (int i = 0; i < n; i++) {
+            dp[i][0] = 1;
+        }
+        if (arr[0] == 0)
+            dp[0][0] = 2; // explanation below
+        if (arr[0] != 0 && arr[0] <= target)
+            dp[0][arr[0]] = 1;
+        for (int index = 1; index < n; index++) {
+            for (int tar = 0; tar <= target; tar++) {
+                int noTake = dp[index - 1][tar];
+                int take = 0;
+                if (tar - arr[index] >= 0) {
+                    take = dp[index - 1][tar - arr[index]];
+                }
+                dp[index][tar] = (take + noTake) % mod;
+            }
+        }
+        return dp[n - 1][target];
+
+    }
 }
 // this problem is same as finding the target sum
 // since we need ∣S1−S2∣ = diff and S1 ≥ S2
@@ -78,3 +115,14 @@ public class CountPartitionsWithGivenDifference {
 // Base conditions if sum - diff <= 0, sum - diff == 1, we need more than 1 as
 // we divide in 2 parts.
 // and an even number to divide and find the half
+
+// tabulation explanation
+// When the first element of the array is 0, setting dp[0][0] = 2 is necessary
+// because there are two distinct subsets that can be formed using only this
+// element and still achieve a sum of 0: one subset excludes the element ({}),
+// and the other includes the element ({0}). Even though both subsets have the
+// same sum, they are counted separately in subset-count DP problems, so the
+// number of ways is 2, not 1. If we incorrectly set dp[0][0] = 1, we would miss
+// one valid subset and all future DP transitions would be undercounted. On the
+// other hand, when arr[0] is not 0, only the empty subset can produce a sum of
+// 0, so dp[0][0] should be 1
