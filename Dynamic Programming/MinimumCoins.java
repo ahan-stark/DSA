@@ -22,6 +22,7 @@ public class MinimumCoins {
             Arrays.fill(temp, -1);
         int ans = recursion(0, coins, amount);
         System.out.println("Minimum coins : " + (ans != Integer.MAX_VALUE ? ans : -1));
+        System.out.println("Minimum coins : " + tabulation(coins, amount));
     }
 
     private static int recursion(int index, int[] coins, int amount) {
@@ -41,6 +42,33 @@ public class MinimumCoins {
         dp[index][amount] = Math.min(pickVal, skip);
         return dp[index][amount];
     }
+
+    private static int tabulation(int[] coins, int amount) {
+        int dp[][] = new int[coins.length][amount + 1];
+        for (int i = 1; i <= amount; i++) {
+            dp[0][i] = i % coins[0] == 0 ? i / coins[0] : (int) 1e9;
+        }
+        for (int index = 1; index < coins.length; index++) {
+            for (int amt = 0; amt <= amount; amt++) {
+                int noPick = dp[index - 1][amt];
+                int pick = (int) 1e9;
+                if (coins[index] <= amt) {
+                    pick = 1 + dp[index][amt - coins[index]];
+                }
+                dp[index][amt] = Math.min(pick, noPick);
+            }
+        }
+        int ans = dp[dp.length - 1][dp[0].length - 1];
+        return ans != (int) 1e9 ? ans : -1;
+    }
 }
 // use pick and non pick algo
 // if we pick, try to pick again or skip
+
+// In tabulation since we pick same elem multiple times, so in pick logic dont
+// check prevIndex, check the cur one.
+// if we have total 11, if we are in target loop 10, if we pick curr elem that
+// is 5, add one, meaning picked one then get dp[index][10-5], same index 5th
+// state(target), because we are picking 2 times one in 5th state, one more in
+// 10th state.
+// this logic is applicable if we can pick from same index, multiple times
