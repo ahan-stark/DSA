@@ -22,6 +22,8 @@ public class UnboundedKnapsack {
         }
         System.out
                 .println("Max values that can be gained under the weight  " + W + " is : " + recursion(0, wt, val, W));
+        System.out
+                .println("Max values that can be gained under the weight  " + W + " is : " + tabulation(wt, val, W));
     }
 
     private static int recursion(int index, int[] wt, int[] val, int w) {
@@ -37,7 +39,32 @@ public class UnboundedKnapsack {
         dp[index][w] = Math.max(pick, noPick);
         return dp[index][w];
     }
+
+    private static int tabulation(int[] wt, int[] val, int W) {
+        int dp[][] = new int[wt.length][W + 1];
+        for (int i = 0; i <= W; i++) {
+            dp[0][i] = val[0] * (i / wt[0]);
+        }
+        for (int i = 1; i < wt.length; i++) {
+            for (int wgt = 0; wgt <= W; wgt++) {
+                int noTake = dp[i - 1][wgt];
+                int take = Integer.MIN_VALUE;
+                if (wt[i] <= wgt) {
+                    take = val[i] + dp[i][wgt - wt[i]];
+                }
+                dp[i][wgt] = Math.max(take, noTake);
+            }
+        }
+        return dp[dp.length - 1][W];
+    }
 }
 // same pick and no pick algo
 // since we have unlimited coins/vals, after choosing try to explore from the
 // same index
+
+// tabulation :
+// Base case, for each wt in 0th index of dp, check how much we can put, lets
+// say wt[0] = 8, from 8 -> 15, we can take val[0] once, 16 -> 23 we can take
+// val[0] twice
+// So we write as dp[0][i] = val[0] * (i / wt[0]) , where i crosses the wt[0],
+// we get 1, 2, 3 etc ...7 / 8 -> 0, 12 / 8 -> 1, 23 / 8 -> 2.. we multiply it
