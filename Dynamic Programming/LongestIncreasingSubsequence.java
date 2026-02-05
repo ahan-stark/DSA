@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class LongestIncreasingSubsequence {
     static int dp[][];
@@ -10,15 +12,13 @@ public class LongestIncreasingSubsequence {
             Arrays.fill(arr, -1);
         }
         System.out.println("The total longest subsequence is : " + recursion(0, -1, nums));
+        System.out.println("The total longest subsequence is : " + tabulation(nums));
+        printSubsequences(nums);
     }
 
     private static int recursion(int index, int prevIndex, int[] nums) {
-        if (index == nums.length - 1) {
-            if (prevIndex == -1 || nums[prevIndex] < nums[index])
-                return 1;
-            else
-                return 0;
-        }
+        if (index == nums.length)
+            return 0;
         if (dp[index][prevIndex + 1] != -1)
             return dp[index][prevIndex + 1];
         int pick = 0;
@@ -28,6 +28,65 @@ public class LongestIncreasingSubsequence {
         int noPick = recursion(index + 1, prevIndex, nums);
         dp[index][prevIndex + 1] = Math.max(pick, noPick);
         return dp[index][prevIndex + 1];
+    }
+
+    private static int tabulation(int nums[]) {
+        int dp[] = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            dp[i] = 1;
+        }
+        int maxCount = 0;
+        for (int curIndex = 1; curIndex < dp.length; curIndex++) {
+            for (int prevIndex = 0; prevIndex < curIndex; prevIndex++) {
+                if (nums[curIndex] > nums[prevIndex] && dp[prevIndex] + 1 > dp[curIndex]) {
+                    dp[curIndex] = 1 + dp[prevIndex];
+                }
+
+            }
+            if (dp[curIndex] > maxCount) {
+                maxCount = dp[curIndex];
+            }
+        }
+        return maxCount;
+
+    }
+
+    private static void printSubsequences(int arr[]) {
+        int parent[] = new int[arr.length];
+        int dp[] = new int[arr.length];
+        int maxCount = 1;
+        int maxIndex = 0;
+        for (int i = 0; i < arr.length; i++) {
+            dp[i] = 1;
+        }
+        for (int curIndex = 1; curIndex < dp.length; curIndex++) {
+            parent[curIndex] = curIndex;
+            for (int prevIndex = 0; prevIndex < curIndex; prevIndex++) {
+
+                if (arr[curIndex] > arr[prevIndex]) {
+                    if (dp[prevIndex] + 1 > dp[curIndex]) {
+                        dp[curIndex] = dp[prevIndex] + 1;
+                        parent[curIndex] = prevIndex;
+                    } else if (dp[prevIndex] + 1 == dp[curIndex] && prevIndex < parent[curIndex]) {
+                        parent[curIndex] = prevIndex;
+                    }
+                }
+            }
+            if (dp[curIndex] > maxCount || (maxCount == dp[curIndex] && curIndex < maxIndex)) {
+                maxCount = dp[curIndex];
+                maxIndex = curIndex;
+            }
+        }
+        List<Integer> list = new ArrayList<>();
+        while (parent[maxIndex] != maxIndex) {
+            list.add(arr[maxIndex]);
+            maxIndex = parent[maxIndex];
+        }
+        list.add(arr[maxIndex]);
+
+        for (int i = list.size() - 1; i >= 0; i--) {
+            System.out.println(list.get(i));
+        }
     }
 
 }
@@ -83,3 +142,13 @@ public class LongestIncreasingSubsequence {
 // with 7
 // new arr will be 1, 4, 7, 12
 // we need just big length so we can do this
+
+// printing
+// same tabulation code, we use parent array and maintain parents for longest
+// subsequnece to track back and find the elems.
+// In case we get same length of subsequence, we get in the "else if" statement
+// and check if both the length are equal and prevIndex is coming before the
+// already stored prevIndex, we get this through parent[curIndex], if we see the
+// curPrevIndex is coming before the already stored one and also the length are
+// equal, change the parent[curIndex] to prevIndex.
+//because we need index that come before, Index-wise Lexicographically Smallest.
